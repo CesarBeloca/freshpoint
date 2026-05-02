@@ -192,4 +192,103 @@ h2 {
     flex-direction: column;
     align-items: stretch;
   }
+
+  /* Existing styles (keep yours) – then add the responsive rules below */
+
+  /* Mobile-first adjustments */
+  @media (max-width: 768px) {
+    body {
+      padding: 1rem;
+    }
+
+    .app-container {
+      padding: 1rem;
+    }
+
+    /* Make headings smaller */
+    h1, h2 {
+      font-size: 1.5rem;
+    }
+
+    /* Form groups: stack inputs vertically */
+    .form-group {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .form-group input, .form-group button {
+      width: 100%;
+      margin: 0.25rem 0;
+    }
+
+    /* Button groups: wrap and full width */
+    .button-group {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .button-group button, .button-group a {
+      flex: 1 0 auto;
+      text-align: center;
+      margin: 0.25rem;
+    }
+
+    /* Fridge list items: stack content */
+    ul li > div {
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 0.5rem;
+    }
+    ul li > div > div:first-child {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Table: horizontal scroll for low-stock */
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    th, td {
+      padding: 0.5rem;
+      min-width: 100px;
+    }
+
+    /* Navigation links: wrap and center */
+    nav {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 0.8rem;
+    }
+    nav a {
+      font-size: 1rem;
+    }
+
+    /* Touch targets: increase tap area */
+    button, a, input[type="checkbox"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    button {
+      padding: 0.75rem 1rem;
+    }
+    input, select {
+      padding: 0.75rem;
+    }
+
+    /* Spacing between list items */
+    li {
+      margin-bottom: 1rem;
+    }
+  }
+
+  /* Even smaller phones */
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 1.3rem;
+    }
+    .button-group button, .button-group a {
+      font-size: 0.9rem;
+      padding: 0.5rem 0.8rem;
+    }
+  }
 }
