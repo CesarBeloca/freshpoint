@@ -1,3 +1,4 @@
+import { config } from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import { Pool } from 'pg';
@@ -7,6 +8,8 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+config();
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -234,5 +237,14 @@ app.get('/api/products/low-stock', async (req, res) => {
     }
 });
 
+app.get('/api/fridges/:fridgeId/products', async (req, res) => {
+   const { fridgeId } = req.params;
+   try {
+       const result = await pool.query('SELECT * FROM products WHERE fridge_id = $1 ORDER BY id', [fridgeId]);
+       res.json(result.rows);
+   } catch (err) {
+       res.status(500).json({ error: (err as Error).message });
+   }
+});
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
