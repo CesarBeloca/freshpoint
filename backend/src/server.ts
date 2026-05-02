@@ -1,4 +1,4 @@
-import { config } from 'dotenv';
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { Pool } from 'pg';
@@ -9,12 +9,9 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-config();
-
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-});
+const pool = process.env.NODE_ENV === 'production'
+    ? new Pool({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } })
+    : new Pool({ user: 'admin', password: 'mysecretpassword', host: 'localhost', port: 5432, database: 'freshpoint_db' });
 
 const initDb = async () => {
     await pool.query(`
@@ -237,14 +234,25 @@ app.get('/api/products/low-stock', async (req, res) => {
     }
 });
 
-app.get('/api/fridges/:fridgeId/products', async (req, res) => {
-   const { fridgeId } = req.params;
+app.get('/api/fridges/:id/products', async (req, res) => {
+   const { id } = req.params;
    try {
-       const result = await pool.query('SELECT * FROM products WHERE fridge_id = $1 ORDER BY id', [fridgeId]);
+       const result = await pool.query('SELECT * FROM products WHERE fridge_id = $1 ORDER BY id', [id]);
        res.json(result.rows);
    } catch (err) {
        res.status(500).json({ error: (err as Error).message });
    }
 });
+
+app.get('/api/fridges/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await pool.query('SELECT * FROM fridges WHERE id = $1', [id]);
+        if (result.rows.length === 0) return res.status(404).json({ error: 'No fridge found' });
+        res.json(result.rows[0]);
+    } catch (err) {
+        res.status(500).json({ error: (err as Error).message });
+    }
+})
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
