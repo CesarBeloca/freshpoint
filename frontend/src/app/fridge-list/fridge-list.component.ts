@@ -7,6 +7,7 @@ import { ApiService, Fridge } from '../api.service';
 @Component({
   selector: 'app-fridge-list',
   imports: [CommonModule, FormsModule, RouterLink],
+  standalone: true,
   templateUrl: './fridge-list.component.html',
   styleUrl: './fridge-list.component.css',
 })

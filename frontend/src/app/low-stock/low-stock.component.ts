@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-low-stock',
   imports: [CommonModule, RouterLink],
+  standalone: true,
   templateUrl: './low-stock.component.html',
   styleUrl: './low-stock.component.css',
 })
