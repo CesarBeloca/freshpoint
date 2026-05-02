@@ -1,0 +1,47 @@
+<div class="app-container">
+  <h2>Products in Fridge - {{ fridgeName }}</h2>
+
+  <div class="form-group">
+    <input [(ngModel)]="newProduct.name" placeholder="Product name" />
+    <input type="number" [(ngModel)]="newProduct.quantity" placeholder="Quantity" />
+    <input type="date" [(ngModel)]="newProduct.expiry_date" placeholder="Expiry Date" />
+    <button (click)="addProduct()">Add Product</button>
+  </div>
+
+  @if (products.length === 0) {
+    <p>No products in this fridge yet.</p>
+  } @else {
+    <ul>
+      @for (product of products; track product.id) {
+        <li>
+          @if (editingProduct?.id === product.id) {
+            <div class="form-group">
+              <input [(ngModel)]="editingProduct!.name" placeholder="Name" />
+              <input type="number" [(ngModel)]="editingProduct!.quantity" placeholder="Quantity" />
+              <input type="date" [(ngModel)]="editingProduct!.expiry_date" placeholder="Expiry Date" />
+              <button (click)="updateProduct()">Save</button>
+              <button (click)="cancelEdit()">Cancel</button>
+            </div>
+          } @else {
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong>{{ product.name }}</strong> - Quantity: {{ product.quantity }}
+                @if (product.expiry_date) {
+                  <span> (Expires: {{ product.expiry_date | date }})</span>
+                }
+              </div>
+              <div class="button-group">
+                <button (click)="startEdit(product)">Edit</button>
+                <button (click)="deleteProduct(product.id)">Delete</button>
+              </div>
+            </div>
+          }
+        </li>
+          }
+    </ul>
+  }
+
+  <div style="margin-top: 1rem;">
+    <a routerLink="/fridges">← Back to Fridges</a>
+  </div>
+</div>

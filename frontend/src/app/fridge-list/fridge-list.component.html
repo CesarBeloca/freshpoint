@@ -1,0 +1,39 @@
+<div class="app-container">
+  <h2>Fridges</h2>
+
+  <div class="form-group">
+    <input [(ngModel)]="newFridge.name" placeholder="Fridge name"/>
+    <input [(ngModel)]="newFridge.location" placeholder="Location"/>
+    <button (click)="addFridge()">Add Fridge</button>
+  </div>
+
+  @if (fridges.length === 0) {
+    <p> No fridges yet. Add one above.</p>
+  } @else {
+    <ul>
+      @for (fridge of fridges; track fridge.id) {
+        <li>
+        @if (editingFridge?.id === fridge.id) {
+          <div class="form-group">
+            <input [(ngModel)]="editingFridge!.name" placeholder="Name" />
+            <input [(ngModel)]="editingFridge!.location" placeholder="Location"/>
+            <button (click)="updateFridge()">Save</button>
+            <button (click)="cancelEdit()">Cancel</button>
+          </div>
+        } @else {
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <strong>{{ fridge.name }}</strong> - {{ fridge.location }}
+            </div>
+            <div>
+              <button (click)="startEdit(fridge)">Edit</button>
+              <button class="danger" (click)="deleteFridge(fridge.id)">Delete</button>
+              <button [routerLink]="['/fridges', fridge.id, 'products']">View Products</button>
+            </div>
+          </div>
+        }
+        </li>
+      }
+    </ul>
+  }
+</div>
