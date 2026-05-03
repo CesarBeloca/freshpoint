@@ -1,4 +1,4 @@
-<div class="app-container">
+<div class="container">
   <h2>Products in Fridge - {{ fridgeName }}</h2>
 
   <div class="form-group">
@@ -15,7 +15,7 @@
       @for (product of products; track product.id) {
         <li>
           @if (editingProduct?.id === product.id) {
-            <div class="form-group">
+            <div class="form-group" style="padding: 0;">
               <input [(ngModel)]="editingProduct!.name" placeholder="Name" />
               <input type="number" [(ngModel)]="editingProduct!.quantity" placeholder="Quantity" />
               <input type="date" [(ngModel)]="editingProduct!.expiry_date" placeholder="Expiry Date" />
@@ -23,7 +23,7 @@
               <button (click)="cancelEdit()">Cancel</button>
             </div>
           } @else {
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
               <div>
                 <strong>{{ product.name }}</strong> - Quantity: {{ product.quantity }}
                 @if (product.expiry_date) {
@@ -41,7 +41,7 @@
     </ul>
   }
 
-  <div style="margin-top: 1rem;">
+  <div class="mt-2">
     <a routerLink="/fridges">← Back to Fridges</a>
   </div>
 </div>

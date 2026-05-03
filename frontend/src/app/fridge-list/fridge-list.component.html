@@ -1,4 +1,4 @@
-<div class="app-container">
+<div class="container">
   <h2>Fridges</h2>
 
   <div class="form-group">
@@ -14,18 +14,18 @@
       @for (fridge of fridges; track fridge.id) {
         <li>
         @if (editingFridge?.id === fridge.id) {
-          <div class="form-group">
+          <div class="form-group" style="padding: 0;">
             <input [(ngModel)]="editingFridge!.name" placeholder="Name" />
             <input [(ngModel)]="editingFridge!.location" placeholder="Location"/>
             <button (click)="updateFridge()">Save</button>
             <button (click)="cancelEdit()">Cancel</button>
           </div>
         } @else {
-          <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; justify-content: space-between; align-items: center;flex-wrap: wrap;">
             <div>
               <strong>{{ fridge.name }}</strong> - {{ fridge.location }}
             </div>
-            <div>
+            <div class="button-group">
               <button (click)="startEdit(fridge)">Edit</button>
               <button class="danger" (click)="deleteFridge(fridge.id)">Delete</button>
               <button [routerLink]="['/fridges', fridge.id, 'products']">View Products</button>

@@ -1,11 +1,11 @@
-<div class="app-container">
-  <h2>Lo Stock Products (quantity < 5)</h2>
+<div class="container">
+  <h2>Low Stock Products (quantity < 5)</h2>
 
   @if (lowStockProducts.length === 0) {
   <div>All products have sufficient stock 👍</div>
   } @else {
     <div style="overflow-x: auto;">
-      <table border="1" cellpadding="8" style="border-collapse: collapse;">
+      <table>
         <thead>
           <tr>
             <th>Fridge</th>
@@ -19,7 +19,7 @@
             <tr>
               <td>{{ product.fridge_name }}</td>
               <td>{{ product.name }}</td>
-              <td style="color: red; font-weight: bold;">{{ product.quantity }}</td>
+              <td style="color: var(--danger); font-weight: bold;">>{{ product.quantity }}</td>
               <td>{{ product.expiry_date | date }}</td>
             </tr>
           }
@@ -28,7 +28,7 @@
     </div>
   }
 
-  <div style="margin-top: 1rem;">
+  <div class="mt-2">
     <a routerLink="/fridges">← Back to Fridges</a>
   </div>
 </div>
