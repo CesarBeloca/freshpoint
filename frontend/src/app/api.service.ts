@@ -24,8 +24,7 @@ export interface LowStockProduct extends Product {
   providedIn: 'root',
 })
 export class ApiService {
-  // private baseUrl = 'https://freshpoint.onrender.com/api';
-  private baseUrl = 'https://freshpoint.onrender.co';
+  private baseUrl = 'https://freshpoint.onrender.com/api';
 
   constructor(private http: HttpClient) {}
 
