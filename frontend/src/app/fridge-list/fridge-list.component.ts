@@ -13,6 +13,7 @@ import { ApiService, Fridge } from '../api.service';
 })
 export class FridgeListComponent implements OnInit {
   fridges: Fridge[] = [];
+  loading = false;
   newFridge: Partial<Fridge> = { name: '', location: '' };
   editingFridge: Fridge | null = null;
 
@@ -23,10 +24,18 @@ export class FridgeListComponent implements OnInit {
   }
 
   loadFridges(): void {
-    this.api.getFridges().subscribe(data => {
-      console.log('Fridges received:', data);
-      this.fridges = data;
-      this.cdr.detectChanges();
+    this.loading = true;
+    this.api.getFridges().subscribe({
+      next: (data) => {
+        console.log('Fridges received:', data);
+        this.fridges = data;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.log('Fridges error:', err);
+        this.loading = false;
+      }
     });
   }
 
@@ -46,7 +55,7 @@ export class FridgeListComponent implements OnInit {
     if (!this.editingFridge) return;
     this.api.updateFridge(this.editingFridge.id, this.editingFridge).subscribe(() => {
       this.loadFridges();
-      (this.editingFridge = null);
+      this.editingFridge = null;
     });
   }
 
